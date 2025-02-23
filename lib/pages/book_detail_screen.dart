@@ -104,30 +104,139 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                             ),
                           ],
                         ),
-
-                        // Padding(
-                        //   padding: EdgeInsets.only(left: 40),
-                        //   child: SizedBox(
-                        //     height: 110,
-                        //     width: MediaQuery.of(context).size.width / 1.5,
-                        //     child: ListView(
-                        //       scrollDirection: Axis.horizontal,
-                        //       children: [
-                        //         Container(
-                        //           decoration: BoxDecoration(
-                        //             borderRadius: BorderRadius.circular(20),
-                        //             border: Border.all(
-                        //               width: 2
-                        //             ),
-                        //           ),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                   ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 30),
+                child: Container(
+                  height: 110,
+                  padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      moreInfo(
+                        "https://cdn.vectorstock.com/i/thumb-large/93/62/psychology-icon-vector-15909362.jpg",
+                        widget.book.genre,
+                        "Genera",
+                      ),
+                      const SizedBox(width: 10),
+                      moreInfo(
+                        "https://cdn2.iconfinder.com/data/icons/translation-1/513/translation-translate-language-international-translating_2_copy_7-512.png",
+                        widget.book.language,
+                        "Language",
+                      ),
+                      const SizedBox(width: 10),
+                      moreInfo(
+                        "https://cdn-icons-png.flaticon.com/512/4994/4994482.png",
+                        widget.book.age,
+                        "Age",
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              SizedBox(
+                height: 400,
+                width: double.infinity,
+                child: DefaultTabController(
+                  length: 2,
+                  child: Scaffold(
+                    backgroundColor: Colors.white,
+                    appBar: PreferredSize(
+                      preferredSize: Size.fromHeight(50),
+                      child: SafeArea(
+                        child: Column(
+                          children: [
+                            Expanded(child: Container()),
+
+                            TabBar(
+                              labelPadding: EdgeInsets.only(bottom: 13),
+                              indicatorColor: Colors.black,
+                              unselectedLabelColor: Colors.black38,
+                              dividerColor: Colors.black,
+                              tabs: [Text("Info"), Text("Reviews")],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    body: TabBarView(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(20),
+                          child: ListView(
+                            children: [
+                              Text(
+                                "Summary",
+                                style: TextStyle(
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.w700,
+                                  letterSpacing: 1.3,
+                                  height: 2,
+                                ),
+                              ),
+
+                              Text(
+                                widget.book.summary,
+                                style: TextStyle(fontSize: 15),
+                                softWrap: true,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Center(
+                          child: Text("No Reviews Available", style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black38,
+                          ),),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget moreInfo(image, title, value) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(width: 2),
+      ),
+      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+      child: Row(
+        children: [
+          Image.network(image, height: 50, width: 50, fit: BoxFit.cover),
+
+          SizedBox(width: 15),
+          Column(
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  letterSpacing: 1.5,
+                  fontSize: 12,
+                  color: Colors.black38,
+                ),
+              ),
+
+              Text(
+                value,
+                style: TextStyle(
+                  letterSpacing: 1.5,
+                  fontSize: 17,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ],
