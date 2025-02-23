@@ -11,6 +11,20 @@ class BookDetailScreen extends StatefulWidget {
 }
 
 class _BookDetailScreenState extends State<BookDetailScreen> {
+
+  String cartText = "Add to Cart";
+
+  bool isCart = true;
+  bool isFavourite = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    bool isCart = false;
+    bool isFavourite = false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,8 +43,13 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
             Icon(Icons.file_upload, color: Colors.black, size: 25),
             SizedBox(width: 25),
             GestureDetector(
-              onTap: () {},
-              child: Icon(Icons.favorite, size: 25),
+              onTap: () {
+                setState(() {
+
+                  isFavourite = !isFavourite;
+                });
+              },
+              child: Icon( isFavourite ? Icons.favorite : Icons.favorite_border, color: Colors.red, size: 25),
             ),
           ],
         ),
@@ -45,11 +64,14 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.network(
-                      widget.book.cover,
-                      fit: BoxFit.cover,
-                      height: 260,
-                      width: MediaQuery.of(context).size.width / 2.5,
+                    Hero(
+                      tag:  widget.book.cover,
+                      child: Image.network(
+                        widget.book.cover,
+                        fit: BoxFit.cover,
+                        height: 260,
+                        width: MediaQuery.of(context).size.width / 2.5,
+                      ),
                     ),
                     SizedBox(width: 10),
 
@@ -189,12 +211,15 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                           ),
                         ),
                         Center(
-                          child: Text("No Reviews Available", style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black38,
-                          ),),
-                        )
+                          child: Text(
+                            "No Reviews Available",
+                            style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black38,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -203,6 +228,63 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
             ],
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Colors.white,
+        onPressed: () {},
+        label: Row(
+          children: [
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: "\$${widget.book.price}",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 30,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+
+                  TextSpan(
+                    text: "\$${widget.book.price + 4.5}",
+                    style: TextStyle(
+                      color: Colors.black38,
+                      fontSize: 15,
+                      decoration: TextDecoration.lineThrough,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(width: 20),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(horizontal: 22, vertical: 10),
+                backgroundColor: isCart ? Colors.red : Colors.black54,
+              ),
+              onPressed: () {
+                setState(() {
+                  isCart = !isCart;
+                  cartText = isCart ? "Remove from Cart" : "Add to Cart";
+                });
+              },
+              child: Row(
+                children: [
+                  Icon(Icons.shopping_cart, color: Colors.white),
+                  SizedBox(width: 5),
+                  Text(
+                    cartText,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

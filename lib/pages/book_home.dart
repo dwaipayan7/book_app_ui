@@ -94,13 +94,16 @@ class BookHome extends StatelessWidget {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.network(
-                              book.cover,
-                              height: 240,
-                              width: 150,
-                              fit: BoxFit.cover,
+                          Hero(
+                            tag: book.cover,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.network(
+                                book.cover,
+                                height: 240,
+                                width: 150,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                           SizedBox(height: 10),
